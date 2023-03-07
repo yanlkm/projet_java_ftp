@@ -78,10 +78,9 @@ public class Main {
 
 			        });
 			        storThread.start();
-		    }
-			 
-			
-			//}   
+			        reponse = recevoir.readLine();
+
+		    }  
 				 else if (commande.startsWith("get")) {
 				envoi.println(ligne);
 				Thread getThread= new Thread( () -> {
@@ -98,7 +97,7 @@ public class Main {
 				File file = new File(System.getProperty("user.dir")+"/"+arguments[1]);
 				 BufferedReader reader = new BufferedReader(new InputStreamReader(socket_get.getInputStream()));
 				 FileOutputStream fos = new FileOutputStream(file); 
-		            //BufferedReader reader = new BufferedReader(new InputStreamReader(Main.sock_serveur.getInputStream()));
+		           
 		            StringBuilder contentBuilder = new StringBuilder();
 		            String line;
 		            while ((line = reader.readLine()) != null) {
@@ -109,7 +108,7 @@ public class Main {
 		            String fileContent = contentBuilder.toString();
 		            System.out.println(fileContent);
 
-		            // Ã‰crire le contenu du fichier dans le fichier local sur le serveur
+		            // écrire le contenu du fichier dans le fichier local sur le serveur
 		            fos.write(fileContent.getBytes());
 		            
 		            // Fermer le flux de sortie
@@ -124,17 +123,16 @@ public class Main {
 				}catch(IOException ex) 
 				{ex.printStackTrace();}});
 		        getThread.start();
+		        reponse = recevoir.readLine();
+
 				
 			}
-			else {envoi.println(ligne);}
+			else {envoi.println(ligne);
 			reponse = recevoir.readLine();
-			System.out.println(reponse);
-				/*if (reponse != null) {
-					
-		
-					reponse = recevoir.readLine();
-		
-				}*/
+}
+			if(reponse!=null && !reponse.equals(""))
+			{System.out.println(reponse);
+			reponse = recevoir.readLine();}
 		}
         	
         // Fermeture de la connexion avec le serveur FTP
