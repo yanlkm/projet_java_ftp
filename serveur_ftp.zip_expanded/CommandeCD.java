@@ -8,7 +8,7 @@ public class CommandeCD extends Commande {
     }
 
     public void execute() {
-
+    	System.out.println("Exécution de la commande CD");
         // Vérifier si le premier argument est présent
         if(commandeArgs.length < 1) {
 
@@ -40,36 +40,34 @@ public class CommandeCD extends Commande {
 
             if(path.equals(".."))
             {
-            	ps.println(path);
-            	ps.println("exécution de la commande 'cd ..' chemin absolu : " + CommandExecutor.chemin_absolu);
+            	
                 String currentDir = CommandExecutor.chemin_absolu;   
                 int debut = currentDir.indexOf("/");
                 int fin = currentDir.lastIndexOf("/");
-                ps.println("tete de beuteu");
+               
                 
                 if(debut ==-1 && fin ==-1) 
                 {
-                    ps.println("Erreur: vous êtes déjà à la racine.");
+                    ps.println("2 Erreur: vous êtes déjà à la racine.");
                 }
 
                 else 
                 {
-                	ps.println("affichage var debut : "+debut);
-                	ps.println("affichage var fin  : "+fin);
+                	
                     String test_currentDir = currentDir.substring(0,fin);
-                 	ps.println("affichage nouveau chemin absolu : "+test_currentDir);
+                 	
                     File chemin = new File( CommandExecutor.repertoire_absolu +"/"+ test_currentDir);
-                    ps.println("affichage du chemin complet : "+CommandExecutor.repertoire_absolu +"/"+ test_currentDir);
+                   
                     
                     if(chemin.isDirectory())  
                     {
                         CommandExecutor.repertoireCourant = chemin.toString();
                         CommandExecutor.chemin_absolu = test_currentDir;
-                        ps.println("current dir new :"+ test_currentDir);
-                        ps.println("chemin absolu local new :"+  chemin.toString());    
+                        ps.println("0 retour au repertoire précédent l'utilisateur : "+ test_currentDir);
+    
                     }
                     else  {
-                    	ps.println("Erreur pas ouf");
+                    	
                     }
 
                 }
@@ -77,26 +75,24 @@ public class CommandeCD extends Commande {
 
             else 
             {
-            	
-            	
-            	
+	
 
                 if (path.startsWith(".."))
 
                 {
-                	ps.println("exécution de la commande 'cd ../vers/rep' chemin absolu : " + CommandExecutor.chemin_absolu);
+                	
                     String currentDir = CommandExecutor.chemin_absolu;   
                     int debut = currentDir.indexOf("/");
                     int fin = currentDir.lastIndexOf("/");
                     if(debut == -1 && fin ==-1) 
                     {
-                        ps.println("Erreur: vous êtes déjà à la racine.");
+                        ps.println("2 Erreur: vous êtes déjà à la racine.");
                     }
                     else {
 
                         currentDir = currentDir.substring(0,fin);
                         String path_changed = path.substring(3,path.length());
-                        ps.println(path_changed);
+  
                         String test_currentDir = currentDir +"/"+ path_changed; 
                         File chemin = new File( CommandExecutor.repertoire_absolu+"/"+ test_currentDir);
 
@@ -106,12 +102,12 @@ public class CommandeCD extends Commande {
 
                             CommandExecutor.chemin_absolu = test_currentDir;
 
-                            ps.println("current dir new :"+ test_currentDir);
-                            ps.println("chemin absolu local new :"+  chemin.toString());
+                            ps.println("0 Nouveau chemin courant :"+ test_currentDir);
+                          
 
                         }
                         else {
-                            ps.println("Chemin incorrect bitches? :" + test_currentDir);
+                            ps.println("2 Chemin incorrect : " + test_currentDir);
                         }
 
                     }
@@ -129,12 +125,12 @@ public class CommandeCD extends Commande {
 
                         
 
-                        ps.println("current dir new :"+ CommandExecutor.chemin_absolu);
-                        ps.println("chemin absolu local new :"+  CommandExecutor.repertoireCourant);
+                        ps.println("0 nouveau chemin courant :"+ CommandExecutor.chemin_absolu);
+                        
                     }
                     else {
 
-                        ps.println("Chemin incorrect bitches? : "+CommandExecutor.repertoire_absolu +"/"+ currentDir+"/" + path);
+                        ps.println("2 Chemin incorrect : "+CommandExecutor.repertoire_absolu +"/"+ currentDir+"/" + path);
                     }
 
 

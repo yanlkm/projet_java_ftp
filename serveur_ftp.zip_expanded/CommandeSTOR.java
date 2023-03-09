@@ -14,11 +14,13 @@ public class CommandeSTOR extends Commande {
 	}
 
 	public void execute()  {
-		ps.println("Commande stor essai DBG 5");
+		
 		try {
             // Ouvrir un flux de sortie sur le fichier
+            System.out.println("Exécution de la commande STOR");
             
             File file = new File(commandeArgs[0]);
+            
             System.out.println("Receiving file: " + file.getName());
             
             FileOutputStream fos = new FileOutputStream(file);
