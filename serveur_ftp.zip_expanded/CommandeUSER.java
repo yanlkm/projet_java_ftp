@@ -8,9 +8,18 @@ public class CommandeUSER extends Commande {
 
 	public void execute() {
 		// Ce serveur accepte uniquement le user personne
-		if(commandeArgs[0].toLowerCase().equals("usr1") || commandeArgs[0].toLowerCase().equals("adrien") ||
-				commandeArgs[0].toLowerCase().equals("usr2")
-				|| commandeArgs[0].toLowerCase().equals("usr3")) {
+		boolean bool=false; 
+		String[] tab_tempo = CommandExecutor.list;
+		for(String s : tab_tempo)
+		{
+			
+		if(commandeArgs[0].toLowerCase().equals(s))
+				{
+			bool=true;
+		}
+		
+		}
+		if(bool) {
 			CommandExecutor.userOk = true;
 			CommandExecutor.var_usr =commandeArgs[0];
 			CommandExecutor.chemin_absolu=CommandExecutor.var_usr;
