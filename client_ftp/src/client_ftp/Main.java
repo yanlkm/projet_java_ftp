@@ -1,4 +1,4 @@
-package client_ftp;
+//package client_ftp;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -52,8 +52,16 @@ public class Main {
 
 					String ligne = commande;
 					
+					
 
 					if (commande.startsWith("stor")) {
+						if ((commande.split(" ").length < 2) || ((commande.split(" ").length > 2)))
+						{
+							System.out.println("Veuillez entrer le bon nombre d'argument pour la commande ");
+							
+							continue;
+							
+						}
 						Thread storThread = new Thread(() -> {
 							try {
 								envoi.println(ligne);
@@ -65,8 +73,9 @@ public class Main {
 								String[] arguments = ligne.split(" ");
 
 								BufferedOutputStream dataOut = new BufferedOutputStream(socket_stor.getOutputStream());
-
+								
 								File file = new File(arguments[1]);
+								System.out.println(file.getAbsolutePath());
 								FileInputStream fis = new FileInputStream(file);
 
 								byte[] buffer = new byte[1024];
@@ -89,9 +98,18 @@ public class Main {
 						});
 						storThread.start();
 					} else if (commande.startsWith("get")) {
-						envoi.println(ligne);
+						if ((commande.split(" ").length < 2) || ((commande.split(" ").length > 2)))
+						{
+							System.out.println("Veuillez entrer le bon nombre d'argument pour la commande ");
+							
+							continue;
+							
+						}
+						
 						Thread getThread = new Thread(() -> {
+							
 							try {
+								envoi.println(ligne);
 								ServerSocket sock = new ServerSocket(4041);
 								Socket socket_get = sock.accept();
 
@@ -111,20 +129,21 @@ public class Main {
 								}
 								reader.close();
 								String fileContent = contentBuilder.toString();
-								System.out.println(fileContent);
+								
 
 								fos.write(fileContent.getBytes());
 
 								fos.close();
 								socket_get.close();
 								sock.close();
-								System.out.println("File saved as: " + file.getAbsolutePath());
+								System.out.println("Le fichier a été sauvegardé : " + file.getAbsolutePath());
 							} catch (IOException ex) {
 								ex.printStackTrace();
 							}
 						});
 						getThread.start();
-					} else if (commande.equals("")) {
+					}  
+					else if (commande.equals("")) {
 						System.out.println("Veuillez entrer UNE commande spécifique");
 						
 						continue;
@@ -135,6 +154,19 @@ public class Main {
 					{
 						System.out.println("Veuillez entrer UNE commande spécifique");	
 						
+						continue;
+					}
+					else if (((commande.startsWith("user") ||commande.startsWith("pass")||commande.startsWith("mkdir")||
+							commande.startsWith("rmdir")) && (commande.split(" ").length < 2) ) || ((commande.startsWith("user") ||commande.startsWith("pass")||commande.startsWith("mkdir")||
+									commande.startsWith("rmdir")) && (commande.split(" ").length > 2) ) ) {
+						
+						System.out.println("Veuillez entrer le bon nombre d'argument pour la commande ");
+						
+						continue;
+					}
+					else if(((commande.startsWith("adduser")) && (commande.split(" ").length < 3))||((commande.startsWith("adduser")) && (commande.split(" ").length > 3)) )
+					{
+						System.out.println("Veuillez entrer le bon nombre d'argument pour la commande ");
 						continue;
 					}
 					else {
